@@ -1,22 +1,22 @@
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import {
+  createStore, combineReducers, applyMiddleware, compose,
+} from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
+import immutableTransform from 'redux-persist-transform-immutable';
 import storage from 'redux-persist/lib/storage';
-import { createReactNavigationReduxMiddleware } from 'react-navigation-redux-helpers';
 import thunk from 'redux-thunk';
+import auth from './auth';
 import food from './food';
 import authMiddleware from './middleware/auth';
 
-const routerMiddleware = createReactNavigationReduxMiddleware(
-  'root',
-  state => state.nav
-);
-
 const persistConfig = {
-  key: '2key',
+  transforms: [immutableTransform()],
+  key: 'root',
   storage,
 };
 
 const rootReducer = combineReducers({
+  auth,
   food,
 });
 
@@ -25,7 +25,6 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 const middlewares = applyMiddleware(
   thunk,
   authMiddleware,
-  routerMiddleware
 );
 
 /* eslint-disable no-underscore-dangle */
@@ -43,3 +42,4 @@ export default (initialState = {}) => {
 };
 
 export * from './food';
+export * from './auth';

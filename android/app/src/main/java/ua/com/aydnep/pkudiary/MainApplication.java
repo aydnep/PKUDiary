@@ -3,6 +3,7 @@ package ua.com.aydnep.pkudiary;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
@@ -35,6 +36,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNI18nPackage(),
             new RNGoogleSigninPackage(),
           new FBSDKPackage(mCallbackManager),
           new RNFirebasePackage(),

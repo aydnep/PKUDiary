@@ -14,6 +14,8 @@ target 'PKUDiary' do
   pod 'FBSDKLoginKit'
   pod 'GoogleSignIn'
   
+  pod 'RNI18n', :path => '../node_modules/react-native-i18n'
+
   target 'PKUDiaryTests' do
     inherit! :search_paths
     # Pods for testing

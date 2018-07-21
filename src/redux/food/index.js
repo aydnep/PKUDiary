@@ -12,6 +12,6 @@ export default (state = initialState, action) => {
 
 const addFood = food => ({ type: 'ADD_FOOD', payload: food });
 
-export const actions = {
+export const foodActions = {
   addFood,
 };
