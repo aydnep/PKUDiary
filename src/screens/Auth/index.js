@@ -50,10 +50,12 @@ class Auth extends React.Component {
           throw new Error('Something went wrong obtaining the users access token');
           // Handle this however fits the flow of your app
         }
+        console.log('Facebook Data', data);
         // create a new firebase credential with the token
         const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
         // login with credential
         const currentUser = await firebase.auth().signInAndRetrieveDataWithCredential(credential);
+        console.log(currentUser);
         console.info(JSON.stringify(currentUser.user.toJSON()));
       } catch (e) {
         console.error(e);
@@ -63,16 +65,13 @@ class Auth extends React.Component {
     googleLogin = async() => {
       try {
         // Add any configuration settings here:
-        await GoogleSignin.configure({
-          iosClientId: '373553291359-95hf9u8d24b9hj1g7fthhkt3qsb648t2.apps.googleusercontent.com',
-          scopes: ['openid', 'email', 'profile'],
-          shouldFetchBasicProfile: true,
-        });
         const data = await GoogleSignin.signIn();
+        console.log('Google Data', data);
         // create a new firebase credential with the token
         const credential = firebase.auth.GoogleAuthProvider.credential(data.idToken, data.accessToken);
         // login with credential
         const currentUser = await firebase.auth().signInAndRetrieveDataWithCredential(credential);
+        console.log(currentUser, firebase);
         console.info(JSON.stringify(currentUser.user.toJSON()));
       } catch (e) {
         console.error(e);
@@ -86,6 +85,13 @@ class Auth extends React.Component {
         });
     }
 
+    goOnline = () => {
+      const db = firebase.database().ref('PKU');
+      console.log(firebase.auth().currentUser);
+      // firebase.auth()
+      console.log(db);
+    }
+
     render() {
       return (
         <View style={styles.container}>
@@ -97,6 +103,11 @@ class Auth extends React.Component {
           <TouchableOpacity onPress={this.googleLogin}>
             <Text>
               GOOGLE
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.goOnline}>
+            <Text>
+              FIREBASE
             </Text>
           </TouchableOpacity>
         </View>
